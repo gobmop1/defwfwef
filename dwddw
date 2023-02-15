@@ -1,0 +1,29 @@
+local Players = game:GetService("Players")
+
+local function onCharacterAdded(character)
+    -- Check for exploit-related code in character
+    if string.find(character:GetFullName(), "AntiCheat") or
+       string.find(character:GetFullName(), "Synapse") or
+       string.find(character:GetFullName(), "KRNL") or
+       string.find(character:GetFullName(), "Fluxus") or
+       string.find(character:GetFullName(), "Protosmasher") or
+       string.find(character:GetFullName(), "Dansploit") or
+       string.find(character:GetFullName(), "SirHurt") or
+       string.find(character:GetFullName(), "RC7") or
+       string.find(character:GetFullName(), "WeAreDevs") then
+        -- Ban player for using exploit-related code
+        character.Parent:Kick("Exploit detected. You have been banned.")
+    end
+end
+
+local function onPlayerAdded(player)
+    player.CharacterAdded:Connect(function(character)
+        onCharacterAdded(character)
+    end)
+end
+
+for _, player in pairs(Players:GetPlayers()) do
+    onPlayerAdded(player)
+end
+
+Players.PlayerAdded:Connect(onPlayerAdded)
